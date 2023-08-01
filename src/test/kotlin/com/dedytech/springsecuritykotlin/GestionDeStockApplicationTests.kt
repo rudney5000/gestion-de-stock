@@ -1,4 +1,4 @@
-package com.dedytech.gestiondestock
+package com.dedytech.springsecuritykotlin
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

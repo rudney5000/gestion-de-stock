@@ -1,11 +1,11 @@
-package com.dedytech.gestiondestock
+package com.dedytech.springsecuritykotlin
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class GestionDeStockApplication
+class SpringSecurityKotlinApplication
 
 fun main(args: Array<String>) {
-    runApplication<GestionDeStockApplication>(*args)
+    runApplication<SpringSecurityKotlinApplication>(*args)
 }
