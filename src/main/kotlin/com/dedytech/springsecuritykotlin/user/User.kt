@@ -1,9 +1,11 @@
 package com.dedytech.springsecuritykotlin.user
 
 import jakarta.persistence.*
+import lombok.Builder
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
+@Builder
 @Entity
 @Table(name = "_user")
 data class User(
@@ -41,4 +43,5 @@ data class User(
 
         }
     }
+
 }
