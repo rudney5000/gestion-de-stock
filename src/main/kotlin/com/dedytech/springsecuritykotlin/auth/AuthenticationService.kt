@@ -18,23 +18,33 @@ class AuthenticationService(
     private val authenticationManager: AuthenticationManager
 ) {
     fun register(request: RegisterRequest): AuthenticationResponse {
-        TODO("Not yet implemented")
-        var user = User.builder()
-            .firstname(request.firstname)
-            .lastname(request.lastname)
-            .email(request.email)
-            .password(passwordEncoder.encode(request.password))
-            .role(Role.USER)
-            .build()
+
+        var user = User().apply {
+            firstname = request.firstname
+            lastname = request.lastname
+            email = request.email
+            password = passwordEncoder.encode(request.password)
+            roles = listOf(Role.USER)
+        }
         userRepository.save(user)
         var jwtToken = jwtService.generateToken(user)
-        return AuthenticationResponse.builder()
-            .token(jwtToken)
-            .build()
+        return AuthenticationResponse(jwtToken)
+
     }
 
     fun authenticate(request: AuthenticationRequest): AuthenticationResponse? {
         TODO("Not yet implemented")
-
+        authenticationManager.authenticate(
+            UsernamePasswordAuthenticationToken(
+                request.email,
+                request.password
+            )
+        )
+        val userOptional = userRepository.findByEmail(request.email)
+        if (userOptional.isPresent){
+            val user = userOptional.get()
+            val jwtToken = jwtService.generateToken(user)
+            return  AuthenticationResponse(jwtToken)
+        }
     }
 }

@@ -1,23 +1,24 @@
 package com.dedytech.springsecuritykotlin.user
 
 import jakarta.persistence.*
-import lombok.Builder
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
-@Builder
 @Entity
 @Table(name = "_user")
 data class User(
     @Id
     @GeneratedValue
-    var id: Int,
-    var firstname: String,
-    var lastname: String,
-    var email: String,
-    var password: String,
+    var id: Int? = null,
+    var firstname: String = "",
+    var lastname: String = "",
+    var email: String = "",
+    var password: String = "",
 
-    val roles: List<Role> = listOf(Role.USER, Role.AMIN)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    var roles: List<Role> = listOf(Role.USER, Role.ADMIN)
+
 ) {
     fun toUserDetails(): UserDetails {
         val user = this@User

@@ -1,5 +1,6 @@
 package com.dedytech.springsecuritykotlin.config
 
+import com.dedytech.springsecuritykotlin.user.User
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -24,16 +25,16 @@ class JwtService {
         return claimsResolver(claims)
     }
 
-    fun generateToken(userDetails: UserDetails) = generateToken(HashMap(), userDetails)
+    fun generateToken(userDetails: User) = generateToken(HashMap(), userDetails)
 
     fun generateToken(
         extraClaims: Map<String, Object>,
-        userDetails: UserDetails
+        userDetails: User
     ): String {
         return Jwts
             .builder()
             .setClaims(extraClaims)
-            .setSubject(userDetails.username)
+            .setSubject(userDetails.email)
             .setIssuedAt(Date(System.currentTimeMillis()))
             .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 24))
             .signWith(getSignInKey(), SignatureAlgorithm.ES256)
